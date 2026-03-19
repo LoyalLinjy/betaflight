@@ -151,6 +151,9 @@ struct {
     // GD25Q128
     // Datasheet: https://download.gigadevice.com/Datasheet/DS-00480-GD25Q128E-Rev1.4.pdf
     { 0xC84018, 104, 80, 4096, 16 },
+    // ALLPOWER_AP25Q128
+    // Datasheet: https://github.com/LoyalLinjy/AP25Q128HD/blob/main/AP25Q128HD.pdf
+    { 0x852018, 133, 80, 256, 256 },
     // End of list
     { 0x000000, 0, 0, 0, 0 }
 };
