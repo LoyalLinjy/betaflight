@@ -518,6 +518,15 @@ STATIC_UNIT_TESTED gyroHardware_e gyroDetect(gyroDev_t *dev)
         FALLTHROUGH;
 #endif
 
+#ifdef USE_ACCGYRO_AP3308HX
+    case GYRO_AP3308HX:
+        if (ap3308hxGyroDetect(dev)) {
+            gyroHardware = GYRO_AP3308HX;
+            break;
+        }
+        FALLTHROUGH;
+#endif
+
 #ifdef USE_VIRTUAL_GYRO
     case GYRO_VIRTUAL:
         if (virtualGyroDetect(dev)) {

@@ -18,7 +18,6 @@
  *
  * If not, see <http://www.gnu.org/licenses/>.
  */
-
 #include <stdlib.h>
 #include <string.h>
 
@@ -182,6 +181,7 @@
 
 // WHO_AM_I register (R)
 #define LSM6DSV_WHO_AM_I                    0x0F
+#define AP3308HX_WHO_AM_I                    0x0F
 
 // Accelerometer control register 1 (R/W)
 #define LSM6DSV_CTRL1                       0x10
@@ -846,6 +846,8 @@
 #define LSM6DSV_FIFO_DATA_OUT_Z_L           0x7D
 #define LSM6DSV_FIFO_DATA_OUT_Z_H           0x7E
 
+#define AP3308HX_WHO_AM_I_CONST           (0x65)
+
 
 uint8_t lsm6dsv16xSpiDetect(const extDevice_t *dev)
 {
@@ -856,6 +858,17 @@ uint8_t lsm6dsv16xSpiDetect(const extDevice_t *dev)
     }
 
     return LSM6DSV16X_SPI;
+}
+
+uint8_t ap3308hxSpiDetect(const extDevice_t *dev)
+{
+    const uint8_t whoAmI = spiReadRegMsk(dev, AP3308HX_WHO_AM_I);
+
+    if (whoAmI != AP3308HX_WHO_AM_I_CONST) {
+        return MPU_NONE;
+    }
+
+    return AP3308HX_SPI;
 }
 
 void lsm6dsv16xAccInit(accDev_t *acc)
@@ -932,6 +945,18 @@ static bool lsm6dsv16xAccReadSPI(accDev_t *acc)
 }
 
 bool lsm6dsv16xSpiAccDetect(accDev_t *acc)
+{
+    if (acc->mpuDetectionResult.sensor != LSM6DSV16X_SPI) {
+        return false;
+    }
+
+    acc->initFn = lsm6dsv16xAccInit;
+    acc->readFn = lsm6dsv16xAccReadSPI;
+
+    return true;
+}
+
+bool ap3308hxAccDetect(accDev_t *acc)
 {
     if (acc->mpuDetectionResult.sensor != LSM6DSV16X_SPI) {
         return false;
@@ -1075,6 +1100,18 @@ bool lsm6dsv16xGyroReadSPI(gyroDev_t *gyro)
 }
 
 bool lsm6dsv16xSpiGyroDetect(gyroDev_t *gyro)
+{
+    if (gyro->mpuDetectionResult.sensor != LSM6DSV16X_SPI) {
+        return false;
+    }
+
+    gyro->initFn = lsm6dsv16xGyroInit;
+    gyro->readFn = lsm6dsv16xGyroReadSPI;
+
+    return true;
+}
+
+bool ap3308hxGyroDetect(gyroDev_t *gyro)
 {
     if (gyro->mpuDetectionResult.sensor != LSM6DSV16X_SPI) {
         return false;
