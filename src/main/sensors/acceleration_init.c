@@ -310,6 +310,15 @@ retry:
         FALLTHROUGH;
 #endif
 
+#ifdef USE_ACCGYRO_AP3308HX
+    case ACC_AP3308HX:
+        if (ap3308hxSpiAccDetect(dev)) {
+            accHardware = ACC_AP3308HX;
+            break;
+        }
+        FALLTHROUGH;
+#endif
+
 #ifdef USE_ACCGYRO_ICM40609D
     case ACC_ICM40609D:
         if (icm40609SpiAccDetect(dev)) {

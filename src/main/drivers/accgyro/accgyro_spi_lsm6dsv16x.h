@@ -39,3 +39,10 @@ uint8_t lsm6dsk320xSpiDetect(const extDevice_t *dev);
 bool lsm6dsk320xSpiAccDetect(accDev_t *acc);
 bool lsm6dsk320xSpiGyroDetect(gyroDev_t *gyro);
 #endif // USE_ACCGYRO_LSM6DSK320X
+
+#ifdef USE_ACCGYRO_AP3308HX
+uint8_t ap3308hxSpiDetect(const extDevice_t *dev);
+bool ap3308hxSpiAccDetect(accDev_t *acc);
+bool ap3308hxSpiGyroDetect(gyroDev_t *gyro);
+
+#endif // USE_ACCGYRO_AP3308HX

@@ -358,6 +358,9 @@ static gyroSpiDetectFn_t gyroSpiDetectFnTable[] = {
 #ifdef USE_ACCGYRO_LSM6DSK320X
     lsm6dsk320xSpiDetect,
 #endif
+#ifdef USE_ACCGYRO_AP3308HX
+    ap3308hxSpiDetect,
+#endif
 #ifdef USE_GYRO_SPI_ICM20689
     icm20689SpiDetect,  // icm20689SpiDetect detects ICM20602 and ICM20689
 #endif

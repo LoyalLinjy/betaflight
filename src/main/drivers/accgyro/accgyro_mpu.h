@@ -223,7 +223,8 @@ typedef enum {
     LSM6DSK320X_SPI,
     ICM_45605_SPI,
     ICM_45686_SPI,
-    ICM_40609_SPI
+    ICM_40609_SPI,
+    AP3308HX_SPI
 } mpuSensor_e;
 
 typedef enum {
