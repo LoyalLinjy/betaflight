@@ -364,6 +364,12 @@
 #define LSM6DSV_CTRL8_FS_XL_8G                          2
 #define LSM6DSV_CTRL8_FS_XL_16G                         3
 
+// Accelerometer HP + LPF2 bandwidth selection
+#define LSM6DSV_CTRL8_HP_LPF2_XL_BW_4                   0
+#define LSM6DSV_CTRL8_HP_LPF2_XL_BW_10                  1
+#define LSM6DSV_CTRL8_HP_LPF2_XL_BW_20                  2
+#define LSM6DSV_CTRL8_HP_LPF2_XL_BW_45                  3
+
 // Control register 9 (R/W)
 #define LSM6DSV_CTRL9                       0x18
 #define LSM6DSV_CTRL9_HP_REF_MODE_XL                    0x40
@@ -871,6 +877,8 @@ uint8_t ap3308hxSpiDetect(const extDevice_t *dev)
     return AP3308HX_SPI;
 }
 
+
+
 void lsm6dsv16xAccInit(accDev_t *acc)
 {
     const extDevice_t *dev = &acc->gyro->dev;
@@ -884,8 +892,16 @@ void lsm6dsv16xAccInit(accDev_t *acc)
                                     LSM6DSV_CTRL1_ODR_XL_MASK,
                                     LSM6DSV_CTRL1_ODR_XL_SHIFT));
 
-    // Enable 16G sensitivity
+    /*// Enable 16G sensitivity
     spiWriteReg(dev, LSM6DSV_CTRL8,
+                LSM6DSV_ENCODE_BITS(LSM6DSV_CTRL8_FS_XL_16G,
+                                    LSM6DSV_CTRL8_FS_XL_MASK,
+                                    LSM6DSV_CTRL8_FS_XL_SHIFT));
+                                    */
+                                   spiWriteReg(dev, LSM6DSV_CTRL8,
+                LSM6DSV_ENCODE_BITS(LSM6DSV_CTRL8_HP_LPF2_XL_BW_4,
+                                    LSM6DSV_CTRL8_HP_LPF2_XL_BW_2_MASK,
+                                    LSM6DSV_CTRL8_HP_LPF2_XL_BW_2_SHIFT) |
                 LSM6DSV_ENCODE_BITS(LSM6DSV_CTRL8_FS_XL_16G,
                                     LSM6DSV_CTRL8_FS_XL_MASK,
                                     LSM6DSV_CTRL8_FS_XL_SHIFT));
