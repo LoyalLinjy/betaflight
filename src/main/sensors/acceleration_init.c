@@ -57,6 +57,8 @@
 #include "drivers/accgyro/accgyro_spi_mpu6500.h"
 #include "drivers/accgyro/accgyro_spi_mpu9250.h"
 
+#include "drivers/accgyro/accgyro_spi_asm330lhh.h"
+
 #include "config/config.h"
 
 #include "drivers/bus_spi.h"
@@ -328,6 +330,14 @@ retry:
         FALLTHROUGH;
 #endif
 
+#ifdef USE_ACCGYRO_ASM330LHH
+    case ACC_ASM330LHH:
+        if (asm330lhhSpiAccDetect(dev)) {
+            accHardware = ACC_ASM330LHH;
+            break;
+        }
+        FALLTHROUGH;
+#endif
 #ifdef USE_VIRTUAL_ACC
     case ACC_VIRTUAL:
         if (virtualAccDetect(dev)) {
