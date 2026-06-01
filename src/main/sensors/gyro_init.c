@@ -58,6 +58,8 @@
 #include "drivers/accgyro/accgyro_spi_mpu6500.h"
 #include "drivers/accgyro/accgyro_spi_mpu9250.h"
 
+#include "drivers/accgyro/accgyro_spi_asm330lhh.h"
+
 #include "drivers/accgyro/gyro_sync.h"
 
 #include "fc/runtime_config.h"
@@ -541,6 +543,15 @@ STATIC_UNIT_TESTED gyroHardware_e gyroDetect(gyroDev_t *dev)
         }
         FALLTHROUGH;
 #endif
+
+#ifdef USE_ACCGYRO_ASM330LHH
+    case GYRO_ASM330LHH:
+        if (asm330lhhSpiGyroDetect(dev)) {
+            gyroHardware = GYRO_ASM330LHH;
+            break;
+        }
+        FALLTHROUGH;
+#endif  
 
 #ifdef USE_VIRTUAL_GYRO
     case GYRO_VIRTUAL:
